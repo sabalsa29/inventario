@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +21,14 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::prefix('product')->group(function(){
+    Route::get('/', [ProductController::class, 'index']);
+    Route::get('/create',[ProductController::class, 'create']);
+    Route::get('/edit/{id}',[ProductController::class, 'edit']);
+    Route::get('/datatable',[ProductController::class, 'datatable']);
+    Route::get('show/{id}',[ProductController::class, 'show']);
+    Route::post('store',[ProductController::class, 'store']);
+    Route::post('update',[ProductController::class, 'update']);
+    Route::any('eliminar',[ProductController::class, 'eliminar']);
+});

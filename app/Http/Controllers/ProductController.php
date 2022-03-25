@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -14,7 +16,15 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $productos  = Product::where('estatus',1)->get();
+        return view('products.index',compact('productos'));
+    }
+
+    public function create(){
+
+        $categorias = Category::where('estatus',1)->pluck('nombre','id')->toArray();
+        return view('products.create',compact('categorias'));
+        //dd('llegaste');
     }
 
     /**
@@ -25,7 +35,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request->all());
+        $product                = new Product();
+        $product->sku           = Str::random(8);
+        $product->nombre        = $request->nombre;
+        $product->categoria_id  = $request->categoria_id;
+        $product->descripcion   = $request->descripcion;
+        $product->cantidad      = $request->cantidad;
+        $product->precio        = $request->precio;
+        $product->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -57,8 +77,13 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function eliminar(Request $request)
     {
-        //
+
+        $product    = Product::find($request->id);
+        $product->estatus   =0;
+        $product->save();
+
+        return redirect()->back();
     }
 }
