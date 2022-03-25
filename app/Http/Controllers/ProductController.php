@@ -45,7 +45,7 @@ class ProductController extends Controller
         $product->precio        = $request->precio;
         $product->save();
 
-        return redirect()->back();
+        return redirect('/');
     }
 
     /**

@@ -22,8 +22,8 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/',  [ProductController::class, 'index'])->name('home');
+    Route::get('/home',  [ProductController::class, 'index'])->name('home');
 
     Route::prefix('product')->group(function(){
         Route::get('/', [ProductController::class, 'index']);
